@@ -1,0 +1,6 @@
+module Pods_phizcoffee {
+  umbrella header "Pods-phizcoffee-umbrella.h"
+
+  export *
+  module * { export * }
+}
