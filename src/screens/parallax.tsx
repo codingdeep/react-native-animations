@@ -7,11 +7,14 @@ import {
     Text,
     View,
     StyleSheet,
-    StatusBar,
+    StatusBar, TouchableOpacity,
 } from 'react-native';
+import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {StackParams} from "../../App";
 
 const {width, height} = Dimensions.get('screen');
-const ITEM_WIDTH = width * 0.76;
+const ITEM_WIDTH = width * 0.80;
 const ITEM_HEIGHT = ITEM_WIDTH * 1.47;
 
 const images = [
@@ -35,16 +38,27 @@ const data = images.map((image, index) => ({
 }));
 
 export default function Parallax() {
+    const navigation = useNavigation<NativeStackNavigationProp<StackParams>>();
+    const scrollx = React.useRef(new Animated.Value(0)).current
     return (
         <View style={styles.container}>
             <StatusBar hidden/>
-            <FlatList
+            <Animated.FlatList
+                onScroll={Animated.event(
+                    [{nativeEvent:{contentOffset:{x:scrollx}}}],
+                    {useNativeDriver: true}
+                )}
                 showsHorizontalScrollIndicator={false}
                 pagingEnabled
                 horizontal
                 keyExtractor={item => item.key}
                 data={data}
-                renderItem={({item, index: number}) => {
+                renderItem={({item, index}) => {
+                    const inputRange = [(index - 1) * width, index * width, (index+1) * width]
+                    const translateX = scrollx.interpolate({
+                        inputRange,
+                        outputRange:[-width * .7,0,width * .7]
+                    })
                     return (
                         <View
                             style={{width, justifyContent: 'center', alignItems: 'center'}}>
@@ -67,12 +81,18 @@ export default function Parallax() {
                                         overflow: 'hidden',
                                         height: ITEM_HEIGHT,
                                     }}>
-                                    <Image
-                                        style={{width: ITEM_WIDTH, height: ITEM_HEIGHT}}
+                                    <Animated.Image
+                                        style={{
+                                            width: ITEM_WIDTH,
+                                            height: ITEM_HEIGHT,
+                                            transform:[
+                                                {translateX}
+                                            ]
+                                    }}
                                         source={{uri: item.photo}}
                                     />
                                 </View>
-                                <Image
+                                <Animated.Image
                                     style={{
                                         width: 60,
                                         height: 60,
@@ -90,6 +110,11 @@ export default function Parallax() {
                     );
                 }}
             />
+            <View>
+                <TouchableOpacity style={{width:100,height: 40}} onPress={() => navigation.navigate('FlingGesture')}>
+                    <Text>Fling Gesture</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }

@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {View, Image, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Image, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp, NativeStackScreenProps} from "@react-navigation/native-stack";
+import {StackParams} from "../../App";
 
 const {width} = Dimensions.get('window');
 export const cards = [
@@ -54,9 +57,15 @@ const styles = StyleSheet.create({
 interface CardProps {
   picture: ReturnType<typeof require>;
   caption: string;
+  name:string,
+  onPress:(name:string)=>void
+
 }
 
-const Card = ({picture, caption}: CardProps) => {
+
+
+const Card = ({picture, caption,name,onPress}: CardProps) => {
+
   return (
     <>
       <View style={styles.container}>
@@ -64,16 +73,22 @@ const Card = ({picture, caption}: CardProps) => {
       </View>
       <View style={styles.caption}>
         <Text style={styles.text}>{caption}</Text>
+          <TouchableOpacity onPress={()=>onPress(name)} style={{alignSelf:'center'}}><Text style={{color:'blue'}}>Details</Text></TouchableOpacity>
+
       </View>
+
     </>
   );
 };
+type Props = {
+  onPress:(name:string)=>void
+}
+const Cards:React.FC<Props>= ({onPress}) => {
 
-const Cards = () => {
   return (
     <View>
       {cards.map(({picture, caption}, index) => (
-        <Card key={index} picture={picture} caption={caption} />
+        <Card onPress={onPress} name={caption} key={index} picture={picture} caption={caption} />
       ))}
     </View>
   );

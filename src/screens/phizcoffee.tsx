@@ -20,6 +20,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import {Product} from '../Model';
 import {useNavigation} from '@react-navigation/native';
+import Parallax from "./parallax";
+import {StackParams} from "../../App";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 
 
 const {width} = Dimensions.get('window');
@@ -28,7 +31,8 @@ const styles = StyleSheet.create({
 });
 const snapToOffsets = [0, CARD_HEIGHT];
 const Phizcoffee = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<StackParams>>()
+
   const translateX = useSharedValue(0);
 
   const onScroll = useAnimatedScrollHandler({
@@ -70,7 +74,7 @@ const Phizcoffee = () => {
             </Animated.ScrollView>
             <Products x={translateX} />
           </View>
-          <Cards />
+          <Cards onPress={(name)=>navigation.navigate("Details",{name})} />
         </ScrollView>
       </Animated.View>
       <View>
