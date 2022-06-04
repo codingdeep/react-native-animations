@@ -1,3 +1,15 @@
+
+export interface IconsType{
+    prepTime:keyof typeof iconsByType,
+    exp:keyof typeof iconsByType,
+    skill:keyof typeof iconsByType,
+    cousine:keyof typeof iconsByType,
+    type:keyof typeof iconsByType
+}
+
+
+
+
 export const detailList = ['prepTime','exp','skill','cousine','type'];
 export const iconsByType={
     prepTime: 'fire',
