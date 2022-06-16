@@ -40,6 +40,23 @@
                     }
                 },
                 {
+                    "source": "/Users/rubelahmed/.gradle/caches/transforms-3/121431027a584e8f0a3b878b4d063c0c/transformed/jetified-android-scalablevideoview-1.0.4/res/values/values.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "1028",
+                        "endOffsets": "1079"
+                    },
+                    "to": {
+                        "startLines": "7419",
+                        "startColumns": "4",
+                        "startOffsets": "458451",
+                        "endColumns": "1028",
+                        "endOffsets": "459475"
+                    }
+                },
+                {
                     "source": "/Users/rubelahmed/demo/rubel/myPractice/react-native/git-repos/react-native-animations/android/app/src/main/res/values/strings.xml",
                     "from": {
                         "startLines": "1",

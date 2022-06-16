@@ -12,12 +12,13 @@ const Animation1: React.FC<{}> = () => {
     const progress:Animated.SharedValue<number> = useSharedValue(.5);
     const scale:Animated.SharedValue<number>    = useSharedValue(1);
     useEffect(()=>{
-        progress.value = withRepeat(withTiming(1,{duration:500}),-1,true)
+        progress.value = withRepeat(withTiming(.2,{duration:500}),-1,true)
         scale.value = withRepeat(withSpring(1.5),-1,true)
     },[]);
     const style = useAnimatedStyle(()=>({
         opacity:progress.value,
-        transform:[{scale:scale.value},{rotate:handleRotate(progress)}]
+        transform:[{scale:scale.value},{rotate:handleRotate(progress)}],
+        borderRadius: progress.value * 20
     }))
 
     return (

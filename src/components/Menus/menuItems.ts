@@ -9,11 +9,11 @@ export const MenuItems: MenuItem[] = [
         name: "animation1",
     },
     {
-        label: 'Animation 2',
+        label: 'Pan Gesture Handler',
         name: "animation2"
     },
     {
-        label: 'Animation 3',
+        label: 'PhizCoffee',
         name: "animation3"
     },
     {
@@ -23,5 +23,25 @@ export const MenuItems: MenuItem[] = [
     {
         label: 'Animation 5',
         name: "animation5"
+    },
+    {
+        label: 'Scroll View Animation',
+        name: "scrollViewAnimation"
+    },
+    {
+        label: 'Pin Gesture',
+        name: "pinGesture"
+    },
+    {
+        label: 'Tap Gesture',
+        name: "tapGesture"
+    },
+    {
+        label: 'Pang Gesture',
+        name: "pangesture"
+    },
+    {
+        label: 'Accordion',
+        name: "accordion"
     }
 ]

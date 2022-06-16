@@ -17,8 +17,12 @@ import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 // react-native-shared-element
 import com.ijzerenhein.sharedelement.RNSharedElementPackage;
+// react-native-svg
+import com.horcrux.svg.SvgPackage;
 // react-native-vector-icons
 import com.oblador.vectoricons.VectorIconsPackage;
+// react-native-video
+import com.brentvatne.react.ReactVideoPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 // react-native-safe-area-context
@@ -71,7 +75,9 @@ public class PackageList {
       new ReanimatedPackage(),
       new RNScreensPackage(),
       new RNSharedElementPackage(),
+      new SvgPackage(),
       new VectorIconsPackage(),
+      new ReactVideoPackage(),
       new RNGestureHandlerPackage(),
       new SafeAreaContextPackage()
     ));
