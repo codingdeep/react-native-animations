@@ -43,5 +43,9 @@ export const MenuItems: MenuItem[] = [
     {
         label: 'Accordion',
         name: "accordion"
+    },
+    {
+        label: 'Car Animation',
+        name: "car"
     }
 ]

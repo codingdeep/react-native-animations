@@ -26,6 +26,7 @@ import CardsAnimation from "./src/screens/FlatListAnimation/cardsAnimation";
 import PanGesture from "./src/screens/basics/PanGesture/Pangesture";
 import Accordions from "./src/screens/basics/Accordion";
 import {NativeBaseProvider} from "native-base";
+import CarAnimation from "./src/screens/basics/CarAnimation";
 
 export const assets = stories
     .map((story) => [story.avatar, story.source])
@@ -75,6 +76,7 @@ const BasicAnimatedScreen = () => (
         <BasicStack.Screen options={stackScreenOptions} name="tapGesture" component={TapGesture}/>
         <BasicStack.Screen options={stackScreenOptions} name="pangesture" component={PanGesture}/>
         <BasicStack.Screen options={stackScreenOptions} name="accordion" component={Accordions}/>
+        <BasicStack.Screen options={stackScreenOptions} name="car" component={CarAnimation}/>
     </BasicStack.Navigator>
 )
 
