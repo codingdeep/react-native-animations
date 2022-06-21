@@ -47,5 +47,9 @@ export const MenuItems: MenuItem[] = [
     {
         label: 'Car Animation',
         name: "car"
+    },
+    {
+        label: 'Circular Progress',
+        name: "progress"
     }
 ]

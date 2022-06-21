@@ -27,7 +27,10 @@ import PanGesture from "./src/screens/basics/PanGesture/Pangesture";
 import Accordions from "./src/screens/basics/Accordion";
 import {NativeBaseProvider} from "native-base";
 import CarAnimation from "./src/screens/basics/CarAnimation";
-
+import CircularProgressBar from "./src/screens/basics/circularProgress";
+import ProgressBar from "./src/screens/ProgressBar";
+import Todo from "./src/screens/todo";
+import theme from './src/theme'
 export const assets = stories
     .map((story) => [story.avatar, story.source])
     .flat();
@@ -57,7 +60,10 @@ export type StackParams = {
     tapGesture,
     FlatList,
     pangesture,
-    accordion
+    accordion,
+    progress,
+    Todo,
+    progress
 }
 
 const Stack = createBottomTabNavigator<StackParams>();
@@ -77,6 +83,7 @@ const BasicAnimatedScreen = () => (
         <BasicStack.Screen options={stackScreenOptions} name="pangesture" component={PanGesture}/>
         <BasicStack.Screen options={stackScreenOptions} name="accordion" component={Accordions}/>
         <BasicStack.Screen options={stackScreenOptions} name="car" component={CarAnimation}/>
+        <BasicStack.Screen options={stackScreenOptions} name="progress" component={CircularProgressBar}/>
     </BasicStack.Navigator>
 )
 
@@ -143,7 +150,7 @@ const FlatListAnimationScreens = () => {
 const App: React.FC<{}> = () => {
     return (
         <GestureHandlerRootView style={{flex: 1}}>
-            <NativeBaseProvider>
+            <NativeBaseProvider theme={theme}>
                 <NavigationContainer>
                     <Stack.Navigator
                         screenOptions={({route}) => ({
@@ -175,7 +182,8 @@ const App: React.FC<{}> = () => {
                         <Stack.Screen options={{...options}} name="FlingGesture" component={FlingGesture}/>
                         <Stack.Screen options={{...options, tabBarBadge: 9}} name="Basic"
                                       component={BasicAnimatedScreen}/>
-                        <Stack.Screen name="FlatList" component={FlatListAnimationScreens}/>
+                        <Stack.Screen name="progress" component={ProgressBar}/>
+                        <Stack.Screen name="Todo" component={Todo}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </NativeBaseProvider>

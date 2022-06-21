@@ -1,6 +1,6 @@
 import React, {Fragment, useRef, useState} from "react";
 import {View, Text, StyleSheet, Dimensions, Image} from "react-native";
-
+import {styles as Style} from "./carSlide";
 import Box from "./box";
 import CarSlide from "./carSlide";
 
@@ -9,7 +9,7 @@ import Logo from "./logo";
 import Animated, {
     Easing,
     Extrapolation,
-    interpolate, runOnJS,
+    interpolate, multiply, runOnJS, useAnimatedScrollHandler,
     useAnimatedStyle,
     useSharedValue,
     withSpring, withTiming
@@ -25,6 +25,7 @@ export {WIDTH}
 export const BORDER_RADIUS = 78
 const CarAnimation: React.FC<{}> = () => {
     const buttonOpacity = useSharedValue(0);
+    const scrollX = useSharedValue(0)
     const [login, setLogin] = useState(false);
 
     const onStateChange = ((event:TapGestureHandlerGestureEvent)=>{
@@ -37,13 +38,22 @@ const CarAnimation: React.FC<{}> = () => {
     })
 
     const animatedStyles = useAnimatedStyle(() => {
-        const scale = interpolate(buttonOpacity.value, [0, 1], [height * 0.7, height * 0.9], { extrapolateRight: Extrapolation.CLAMP });
+        const scale = interpolate(buttonOpacity.value, [0, 1], [height * 0.7, height * 0.95], { extrapolateRight: Extrapolation.CLAMP });
 
         return {
             height: scale,
         };
     });
 
+    const scrollHandler= useAnimatedScrollHandler(event=>{
+        scrollX.value = withSpring(event.contentOffset.x)
+    })
+
+    const sStyle = useAnimatedStyle(()=>(
+        {
+            transform:[{translateX: -scrollX.value}]
+        }
+    ))
 
 
     return (
@@ -52,14 +62,40 @@ const CarAnimation: React.FC<{}> = () => {
                 <Animated.View style={{alignItems:'center',flex: 1}}>
                     <Logo />
                 </Animated.View>
+                <View style={{flex: 1}}>
+                    <Animated.View style={[{
+                        width:WIDTH * data.length - 1,
+                        flexDirection:'row',
+                        height: 100,
+                        alignItems:'center',
+                        justifyContent:'center'
+                    },sStyle]}>
+                        {data.map(({carname,image,carsspeed},index)=> {
+
+                            return <View style={{
+                                flex: 1, width: WIDTH, alignItems: 'center',
+                                justifyContent: 'center', backgroundColor: '#fff', height: 100
+                            }}>
+                                <CarSlide carname="" image={image} />
+                            </View>
+                        })}
+                    </Animated.View>
+                </View>
                 <Animated.View>
-                    <View>
-                        <Text style={{fontSize: 30}}>Effect</Text>
+                    <View style={{alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{fontSize: 20,fontWeight:'bold'}}>Effect</Text>
                     </View>
                     <TapGestureHandler onHandlerStateChange={onStateChange}>
-                        <Animated.View style={{width:WIDTH * data.length - 1,flexDirection:'row',height: 50}}>
+                        <Animated.View style={[{
+                            width:WIDTH * data.length - 1,
+                            flexDirection:'row',
+                            height: 50,
+                            alignItems:'center',
+                            justifyContent:'center'
+                        },sStyle]}>
                             {data.map(({carname,image,carsspeed},index)=>(
-                                <View style={{flex: 1,width: WIDTH}}>
+                                <View style={{flex: 1,width: WIDTH,alignItems:'center',
+                                    justifyContent:'center'}}>
                                     <Text style={{fontSize: 16}}>{carsspeed}</Text>
                                 </View>
                             ))}
@@ -68,6 +104,7 @@ const CarAnimation: React.FC<{}> = () => {
                 </Animated.View>
             </Animated.View>
             <Animated.ScrollView
+                onScroll={scrollHandler}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 bounces={false}
