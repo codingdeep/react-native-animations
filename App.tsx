@@ -29,8 +29,11 @@ import {NativeBaseProvider} from "native-base";
 import CarAnimation from "./src/screens/basics/CarAnimation";
 import CircularProgressBar from "./src/screens/basics/circularProgress";
 import ProgressBar from "./src/screens/ProgressBar";
-import Todo from "./src/screens/todo";
+import Todo from "./src/screens/todo/toDo";
 import theme from './src/theme'
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import MainScreen from "./src/screens/todo/main";
+import About from "./src/screens/todo/about";
 export const assets = stories
     .map((story) => [story.avatar, story.source])
     .flat();
@@ -147,6 +150,21 @@ const FlatListAnimationScreens = () => {
 }
 
 
+const Drawer = createDrawerNavigator();
+
+
+const TodoScreens = ()=>{
+    return(
+        <Drawer.Navigator initialRoutename="Main">
+            <Drawer.Screen name="Main" component={MainScreen}/>
+            <Drawer.Screen name="About" component={About}/>
+        </Drawer.Navigator>
+    )
+}
+
+
+
+
 const App: React.FC<{}> = () => {
     return (
         <GestureHandlerRootView style={{flex: 1}}>
@@ -183,7 +201,7 @@ const App: React.FC<{}> = () => {
                         <Stack.Screen options={{...options, tabBarBadge: 9}} name="Basic"
                                       component={BasicAnimatedScreen}/>
                         <Stack.Screen name="progress" component={ProgressBar}/>
-                        <Stack.Screen name="Todo" component={Todo}/>
+                        <Stack.Screen options={{...options}} name="Todo" component={TodoScreens}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </NativeBaseProvider>

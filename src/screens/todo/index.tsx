@@ -1,17 +1,7 @@
-import React from "react";
-import {View, Text, StyleSheet} from "react-native";
+import React from 'react'
+import {createDrawerNavigator} from "@react-navigation/drawer";
 import MainScreen from "./main";
 
-const Todo: React.FC<{}> = () => {
-    return (
-        <MainScreen></MainScreen>
-    )
-}
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
-export default Todo
+const Drawer = createDrawerNavigator()
+
+
