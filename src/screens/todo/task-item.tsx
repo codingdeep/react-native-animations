@@ -4,13 +4,25 @@ import {Box, HStack, themeTools, useColorModeValue} from 'native-base'
 import theme from "../../theme";
 import {AnimatedCheckBox} from "./animated-checkbox";
 import AnimatedTaskLabel from "./animated-task-label";
+import SwipeAbleView from "./swipeable-view";
+import Feather from 'react-native-vector-icons/Feather'
+import {PanGestureHandlerProps} from "react-native-gesture-handler";
 
-interface TaskProps {
+interface TaskProps extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     isDone: boolean,
     toggleCheckBox: () => void,
+    onPressLabel?: () => void,
+    onRemove?: () => void;
+    subject: string
 }
 
-const TaskItem: React.FC<TaskProps> = ({isDone, toggleCheckBox}) => {
+const TaskItem: React.FC<TaskProps> = ({
+                                           isDone,
+                                           toggleCheckBox,
+                                           onPressLabel,
+                                           onRemove,
+                                           subject
+                                       }) => {
     const highlightColor = themeTools.getColor(
         theme,
         useColorModeValue('blue.500', 'blue.400')
