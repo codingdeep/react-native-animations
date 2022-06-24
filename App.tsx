@@ -138,7 +138,6 @@ type FlatListRoutes = {
     cardsAnimation
 }
 
-
 const FlatListAnimationStack = createNativeStackNavigator<FlatListRoutes>();
 const FlatListAnimationScreens = () => {
     return (
@@ -149,9 +148,7 @@ const FlatListAnimationScreens = () => {
     )
 }
 
-
 const Drawer = createDrawerNavigator();
-
 
 const TodoScreens = ()=>{
     return(
@@ -161,8 +158,6 @@ const TodoScreens = ()=>{
         </Drawer.Navigator>
     )
 }
-
-
 
 
 const App: React.FC<{}> = () => {
