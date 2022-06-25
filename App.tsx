@@ -149,7 +149,6 @@ const FlatListAnimationScreens = () => {
 }
 
 const Drawer = createDrawerNavigator();
-
 const TodoScreens = ()=>{
     return(
         <Drawer.Navigator initialRoutename="Main">

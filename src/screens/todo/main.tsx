@@ -8,6 +8,11 @@ export default function MainScreen() {
     const handlePressCheckBox = useCallback(() => {
         setChecked(prevState => !prevState)
     }, []);
+
+    const removeTaskItem=()=>{
+        alert('ok')
+    }
+
     return (
         <Center
             _dark={{bg: 'blueGray.900'}}
@@ -17,7 +22,7 @@ export default function MainScreen() {
         >
             <VStack space={5} alignItems="center" w="full">
                 {/*<TaskItem  isDone={checked} toggleCheckBox={handlePressCheckBox} subject="Task Item"/>*/}
-                <TodoItem isDone={checked} toggleCheckBox={handlePressCheckBox} subject="Task Item" />
+                <TodoItem onRemove={removeTaskItem} isDone={checked} toggleCheckBox={handlePressCheckBox} subject="Task Item" />
                 <ThemeToggle/>
             </VStack>
         </Center>
