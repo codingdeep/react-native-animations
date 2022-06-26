@@ -11,6 +11,7 @@ import { Dimensions } from "react-native";
 import {PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps} from "react-native-gesture-handler";
 import {makeStyledComponent} from "../../utils/styled";
 import {translate} from "react-native-redash/lib/typescript/v1";
+import {Box} from "native-base";
 
 interface CustomSwipeAbleProps extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     children: React.ReactNode,
@@ -26,7 +27,6 @@ const CustomSwipeAble: React.FC<CustomSwipeAbleProps> = (props) => {
     const {
         children,
         onSwipeLeft,
-        onRemove,
         backView,
         simultaneousHandlers
     } = props
@@ -43,7 +43,7 @@ const CustomSwipeAble: React.FC<CustomSwipeAbleProps> = (props) => {
                 translateX.value = withSpring(-SCREEN_WIDTH)
                 onSwipeLeft && runOnJS(onSwipeLeft)()
             }else{
-                translateX.value = withSpring(0)
+                translateX.value = withTiming(0)
             }
         }
     });
@@ -59,7 +59,12 @@ const CustomSwipeAble: React.FC<CustomSwipeAbleProps> = (props) => {
 
 
     return (
-        <StyledView>
+        <StyledView w="full">
+            {backView &&
+                <Box position="absolute" left={0} right={0} top={0} bottom={0}>
+                    {backView}
+                </Box>
+            }
             <PanGestureHandler onGestureEvent={gestureEventHandler}>
                 <StyledView style={sStyle}>
                     {children}

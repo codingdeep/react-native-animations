@@ -1,6 +1,6 @@
-import React from "react";
-import {Pressable, StyleSheet} from "react-native";
-import {Box, View, Text, HStack, themeTools, useColorModeValue} from "native-base";
+import React, {useCallback} from "react";
+import {NativeSyntheticEvent, Pressable, TextInputChangeEventData} from "react-native";
+import {Box, Input, Icon, HStack, themeTools, useColorModeValue} from "native-base";
 import CustomCheckbox from "./custom-checkbox";
 import theme from "../../theme";
 import CustomTaskLabel from "./custom-task-label";
@@ -8,15 +8,18 @@ import CustomSwipeAble from "./custom-swipeable";
 import Feather from 'react-native-vector-icons/Feather'
 import {PanGestureHandlerProps} from "react-native-gesture-handler";
 interface Todo extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'>{
+    isEditing?:boolean,
     isDone: boolean,
     toggleCheckBox: () => void,
     subject: string,
     onPressLabel?:()=>void,
-    onRemove?:()=>void
+    onRemove?:()=>void,
+    onChangeSubject?:(subject:string) => void,
+    onFinishEditing?:()=>void
 }
 
 
-const TodoItem: React.FC<Todo> = ({isDone, toggleCheckBox,onRemove, subject, simultaneousHandlers}) => {
+const TodoItem: React.FC<Todo> = ({isEditing,isDone, toggleCheckBox,onRemove, subject, simultaneousHandlers, onChangeSubject, onFinishEditing,onPressLabel}) => {
 
     const highlightColor = themeTools.getColor(
         theme,
@@ -43,10 +46,20 @@ const TodoItem: React.FC<Todo> = ({isDone, toggleCheckBox,onRemove, subject, sim
         useColorModeValue('white', 'white')
     )
 
+    const changeSubjectHandler= useCallback((e:NativeSyntheticEvent<TextInputChangeEventData>)=>{
+        onChangeSubject && onChangeSubject(e.nativeEvent.text)
+    },[onChangeSubject])
+
+
     return (
         <CustomSwipeAble
             onSwipeLeft={onRemove}
             simultaneousHandlers={simultaneousHandlers}
+            backView={
+                <Box w="full" h="full" bg="red.500" alignItems="flex-end" pr={4} justifyContent="center">
+                    <Icon color="white" as={<Feather name="trash-2" />} size={19} />
+                </Box>
+            }
         >
             <HStack
                 alignItems="center"
@@ -64,20 +77,32 @@ const TodoItem: React.FC<Todo> = ({isDone, toggleCheckBox,onRemove, subject, sim
                             checked={isDone}/>
                     </Pressable>
                 </Box>
-                <CustomTaskLabel
-                    checked={isDone}
-                    subject={subject}
-                    activeTextColor={activeTextColor}
-                    inactiveColor={doneTextColor}
-                    strikeThrough={strikeThrough}
-                />
+                {isEditing  ? (
+                    <Input
+                        placeholder="Task"
+                        variant="unstyled"
+                        px={1}
+                        py={0}
+                        autoFocus
+                        blurOnSubmit
+                        onChange={changeSubjectHandler}
+                        value={subject}
+                        onBlur={onFinishEditing}
+                    />
+                ):(
+                    <CustomTaskLabel
+                        onPressLabel={onPressLabel}
+                        checked={isDone}
+                        subject={subject}
+                        activeTextColor={activeTextColor}
+                        inactiveColor={doneTextColor}
+                        strikeThrough={strikeThrough}
+                    />
+                )}
+
             </HStack>
         </CustomSwipeAble>
     )
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    }
-})
+
 export default TodoItem

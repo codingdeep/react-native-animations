@@ -5,12 +5,14 @@ import TodoItem from './tod-item'
 
 export default function MainScreen() {
     const [checked, setChecked] = useState(false)
+    const [isEditing,setEditing] = useState(false)
+    const [subject, setSubject] = useState('Task Item')
     const handlePressCheckBox = useCallback(() => {
         setChecked(prevState => !prevState)
     }, []);
 
     const removeTaskItem=()=>{
-        alert('ok')
+        //alert('ok')
     }
 
     return (
@@ -22,7 +24,15 @@ export default function MainScreen() {
         >
             <VStack space={5} alignItems="center" w="full">
                 {/*<TaskItem  isDone={checked} toggleCheckBox={handlePressCheckBox} subject="Task Item"/>*/}
-                <TodoItem onRemove={removeTaskItem} isDone={checked} toggleCheckBox={handlePressCheckBox} subject="Task Item" />
+                <TodoItem
+                    isEditing={isEditing}
+                    onChangeSubject={(text)=>setSubject(text)}
+                    onFinishEditing={()=>setEditing(false)}
+                    onRemove={removeTaskItem}
+                    isDone={checked}
+                    onPressLabel={()=>setEditing(true)}
+                    toggleCheckBox={handlePressCheckBox}
+                    subject={subject}/>
                 <ThemeToggle/>
             </VStack>
         </Center>

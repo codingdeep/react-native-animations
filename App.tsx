@@ -147,7 +147,6 @@ const FlatListAnimationScreens = () => {
         </FlatListAnimationStack.Navigator>
     )
 }
-
 const Drawer = createDrawerNavigator();
 const TodoScreens = ()=>{
     return(
