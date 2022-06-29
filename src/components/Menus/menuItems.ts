@@ -51,5 +51,13 @@ export const MenuItems: MenuItem[] = [
     {
         label: 'Circular Progress',
         name: "progress"
+    },
+    {
+        label: 'Scroll Animation',
+        name: "scrollAnimation"
+    },
+    {
+        label: 'Channel',
+        name: "channel"
     }
 ]

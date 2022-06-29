@@ -3,13 +3,65 @@ import {Text, Box, Center, themeTools, useTheme, useColorMode, useColorModeValue
 import ThemeToggle from "./theme-toggle";
 import TodoItem from './tod-item'
 
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import shortid from "shortid";
+import TodoList from "./todo-list";
+import {MotiView} from "moti";
+const initialData = [
+    {
+        id: shortid.generate(),
+        subject: 'Buy movie tickets for Friday',
+        done: false
+    },
+    {
+        id: shortid.generate(),
+        subject: 'Make a react native tutorial',
+        done: false
+    }
+]
 export default function MainScreen() {
-    const [checked, setChecked] = useState(false)
-    const [isEditing,setEditing] = useState(false)
-    const [subject, setSubject] = useState('Task Item')
-    const handlePressCheckBox = useCallback(() => {
-        setChecked(prevState => !prevState)
+    const [data,setData] = useState(initialData)
+    const [editingItemId,setEditingItemId] = useState<string | null>(null)
+
+    const handleToggleTaskItem = useCallback((item) => {
+        setData(prevState => {
+            const newData = [...prevState]
+            const index = prevState.indexOf(item)
+            newData[index] = {
+                ...item,
+                done: !item.done
+            }
+            return newData
+        })
     }, []);
+
+    const handleChangeTaskItemSubject = useCallback((item,subject)=>{
+        setData(prevState => {
+            const newData = [...prevState]
+            const index = prevState.indexOf(item)
+            newData[index] = {
+                ...item,
+                subject: subject
+            }
+            return newData
+        })
+    },[])
+
+    const handleFinishEditingTask = useCallback(item=>{
+        setEditingItemId(null)
+    },[])
+
+    const handlePressTaskItemLabel=useCallback(item=>{
+        setEditingItemId(item.id)
+    },[])
+
+    const handleTaskRemoveItem = useCallback((item)=>{
+        setData(prevState => {
+            const newData = prevState.filter(i => i!==item)
+            return newData
+        })
+    },[])
+
 
     const removeTaskItem=()=>{
         //alert('ok')
@@ -24,15 +76,27 @@ export default function MainScreen() {
         >
             <VStack space={5} alignItems="center" w="full">
                 {/*<TaskItem  isDone={checked} toggleCheckBox={handlePressCheckBox} subject="Task Item"/>*/}
-                <TodoItem
-                    isEditing={isEditing}
-                    onChangeSubject={(text)=>setSubject(text)}
-                    onFinishEditing={()=>setEditing(false)}
-                    onRemove={removeTaskItem}
-                    isDone={checked}
-                    onPressLabel={()=>setEditing(true)}
-                    toggleCheckBox={handlePressCheckBox}
-                    subject={subject}/>
+
+                <TodoList
+                    data={data}
+                    //editingItem={is}
+                    onToggleItem={handleToggleTaskItem}
+                    onChangeSubject={handleChangeTaskItemSubject}
+                    onFinishEditing={handleFinishEditingTask}
+                    onRemoveItem={handleTaskRemoveItem}
+                    onPressLabel={handlePressTaskItemLabel}
+                    editingItemId={editingItemId} />
+
+
+                {/*<TodoItem*/}
+                {/*    isEditing={isEditing}*/}
+                {/*    onChangeSubject={(text)=>setSubject(text)}*/}
+                {/*    onFinishEditing={()=>setEditing(false)}*/}
+                {/*    onRemove={removeTaskItem}*/}
+                {/*    isDone={checked}*/}
+                {/*    onPressLabel={()=>setEditing(true)}*/}
+                {/*    toggleCheckBox={handlePressCheckBox}*/}
+                {/*    subject={subject}/>*/}
                 <ThemeToggle/>
             </VStack>
         </Center>

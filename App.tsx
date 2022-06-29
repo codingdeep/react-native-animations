@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-native-reanimated'
 import {NavigationContainer, NavigatorScreenParams} from '@react-navigation/native';
 import {createNativeStackNavigator, NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -34,6 +35,8 @@ import theme from './src/theme'
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import MainScreen from "./src/screens/todo/main";
 import About from "./src/screens/todo/about";
+import ScrollAnimation from "./src/screens/basics/ScrollAnimation";
+import Channel from "./src/screens/basics/ChannelAnimation/channel";
 export const assets = stories
     .map((story) => [story.avatar, story.source])
     .flat();
@@ -66,7 +69,8 @@ export type StackParams = {
     accordion,
     progress,
     Todo,
-    progress
+    progress,
+    scrollAnimation
 }
 
 const Stack = createBottomTabNavigator<StackParams>();
@@ -87,6 +91,8 @@ const BasicAnimatedScreen = () => (
         <BasicStack.Screen options={stackScreenOptions} name="accordion" component={Accordions}/>
         <BasicStack.Screen options={stackScreenOptions} name="car" component={CarAnimation}/>
         <BasicStack.Screen options={stackScreenOptions} name="progress" component={CircularProgressBar}/>
+        <BasicStack.Screen options={stackScreenOptions} name="scrollAnimation" component={ScrollAnimation}/>
+        <BasicStack.Screen options={stackScreenOptions} name="channel" component={Channel}/>
     </BasicStack.Navigator>
 )
 
