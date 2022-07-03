@@ -37,6 +37,8 @@ import MainScreen from "./src/screens/todo/main";
 import About from "./src/screens/todo/about";
 import ScrollAnimation from "./src/screens/basics/ScrollAnimation";
 import Channel from "./src/screens/basics/ChannelAnimation/channel";
+import ColorPicker from './src/screens/basics/ColorPicker'
+import Wave from "./src/screens/Svg/wave";
 export const assets = stories
     .map((story) => [story.avatar, story.source])
     .flat();
@@ -93,6 +95,7 @@ const BasicAnimatedScreen = () => (
         <BasicStack.Screen options={stackScreenOptions} name="progress" component={CircularProgressBar}/>
         <BasicStack.Screen options={stackScreenOptions} name="scrollAnimation" component={ScrollAnimation}/>
         <BasicStack.Screen options={stackScreenOptions} name="channel" component={Channel}/>
+        <BasicStack.Screen options={stackScreenOptions} name="colorPicker" component={ColorPicker}/>
     </BasicStack.Navigator>
 )
 
@@ -163,6 +166,16 @@ const TodoScreens = ()=>{
     )
 }
 
+const SvgStack = createNativeStackNavigator();
+const SvgStackScreen = () => {
+    return (
+        <SvgStack.Navigator>
+            <SvgStack.Screen options={{headerShown: false}} name="wave"
+                                           component={Wave}/>
+        </SvgStack.Navigator>
+    )
+}
+
 
 const App: React.FC<{}> = () => {
     return (
@@ -201,6 +214,8 @@ const App: React.FC<{}> = () => {
                                       component={BasicAnimatedScreen}/>
                         <Stack.Screen name="progress" component={ProgressBar}/>
                         <Stack.Screen options={{...options}} name="Todo" component={TodoScreens}/>
+                        <Stack.Screen options={{...options}} name="SVG" component={SvgStackScreen}/>
+
                     </Stack.Navigator>
                 </NavigationContainer>
             </NativeBaseProvider>

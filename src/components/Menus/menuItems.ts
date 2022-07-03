@@ -59,5 +59,9 @@ export const MenuItems: MenuItem[] = [
     {
         label: 'Channel',
         name: "channel"
+    },
+    {
+        label: 'colorPicker',
+        name: "colorPicker"
     }
 ]
