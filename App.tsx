@@ -39,6 +39,7 @@ import ScrollAnimation from "./src/screens/basics/ScrollAnimation";
 import Channel from "./src/screens/basics/ChannelAnimation/channel";
 import ColorPicker from './src/screens/basics/ColorPicker'
 import Wave from "./src/screens/Svg/wave";
+import Promo from "./src/screens/basics/CardAnimation";
 export const assets = stories
     .map((story) => [story.avatar, story.source])
     .flat();
@@ -72,7 +73,8 @@ export type StackParams = {
     progress,
     Todo,
     progress,
-    scrollAnimation
+    scrollAnimation,
+    monzo
 }
 
 const Stack = createBottomTabNavigator<StackParams>();
@@ -96,6 +98,7 @@ const BasicAnimatedScreen = () => (
         <BasicStack.Screen options={stackScreenOptions} name="scrollAnimation" component={ScrollAnimation}/>
         <BasicStack.Screen options={stackScreenOptions} name="channel" component={Channel}/>
         <BasicStack.Screen options={stackScreenOptions} name="colorPicker" component={ColorPicker}/>
+        <BasicStack.Screen options={stackScreenOptions} name="monzo" component={Promo}/>
     </BasicStack.Navigator>
 )
 

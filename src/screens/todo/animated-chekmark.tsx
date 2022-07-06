@@ -8,7 +8,7 @@ interface Props{
 const AnimatedPath = Animated.createAnimatedComponent(Path)
 const AnimatedCheckmark: React.FC<Props> = ({progress,...pathProps}) => {
     const [length,setLength] = useState(0)
-    const ref = useRef<typeof AnimatedPath>(null);
+    const ref = useRef(null);
     const animatedCheckmarkProps = useAnimatedProps(()=>{
         return {
             strokeDashoffset: Math.max(

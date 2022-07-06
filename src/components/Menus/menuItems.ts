@@ -63,5 +63,9 @@ export const MenuItems: MenuItem[] = [
     {
         label: 'colorPicker',
         name: "colorPicker"
+    },
+    {
+        label: 'Monzo',
+        name: "monzo"
     }
 ]
